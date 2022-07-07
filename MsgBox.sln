@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsgBox", "MsgBox\MsgBox.csproj", "{74671B37-9EE3-45B8-B709-69F3CC2721C2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B395E38D-CBA7-426E-AA1E-A9839B3DB164} = {B395E38D-CBA7-426E-AA1E-A9839B3DB164}
+		{D31C9738-A506-4E6E-8FD3-0805D1D7FFF7} = {D31C9738-A506-4E6E-8FD3-0805D1D7FFF7}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsgBoxEx", "MsgBoxEx\MsgBoxEx.csproj", "{D31C9738-A506-4E6E-8FD3-0805D1D7FFF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppRes", "AppRes\AppRes.csproj", "{B395E38D-CBA7-426E-AA1E-A9839B3DB164}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D31C9738-A506-4E6E-8FD3-0805D1D7FFF7} = {D31C9738-A506-4E6E-8FD3-0805D1D7FFF7}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74671B37-9EE3-45B8-B709-69F3CC2721C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74671B37-9EE3-45B8-B709-69F3CC2721C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74671B37-9EE3-45B8-B709-69F3CC2721C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74671B37-9EE3-45B8-B709-69F3CC2721C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D31C9738-A506-4E6E-8FD3-0805D1D7FFF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D31C9738-A506-4E6E-8FD3-0805D1D7FFF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D31C9738-A506-4E6E-8FD3-0805D1D7FFF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D31C9738-A506-4E6E-8FD3-0805D1D7FFF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B395E38D-CBA7-426E-AA1E-A9839B3DB164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B395E38D-CBA7-426E-AA1E-A9839B3DB164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B395E38D-CBA7-426E-AA1E-A9839B3DB164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B395E38D-CBA7-426E-AA1E-A9839B3DB164}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D49512E9-BFBD-46D4-8D0D-A32DA124E13A}
+	EndGlobalSection
+EndGlobal
