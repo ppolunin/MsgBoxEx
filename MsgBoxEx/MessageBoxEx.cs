@@ -13,6 +13,7 @@ namespace System.Windows.Forms
         private const uint WM_SETFOCUS = 7;
         private const int MB_HELP = 0x4000;
         private const int MB_USERICON = 0x0080;
+        private const int MB_TASKMODAL = 0x2000;
 
         private delegate void MSGBOXPARAMS_MsgBoxCallback(IntPtr _);
 
@@ -42,20 +43,34 @@ namespace System.Windows.Forms
                 const string CantShowMBServiceWithOwner = "CantShowMBServiceWithOwner";
                 const string CantShowModalOnNonInteractive = "CantShowModalOnNonInteractive";
 
-                if ((style & ((int)MessageBoxOptions.ServiceNotification | (int)MessageBoxOptions.DefaultDesktopOnly)) != 0)
-                {
-                    if (SystemInformation.UserInteractive == false)
-                        throw new InvalidOperationException(SR.GetString(CantShowModalOnNonInteractive));
+                bool serviceOpt = ((MessageBoxOptions)style & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) != 0;
 
+                if (SystemInformation.UserInteractive == false && serviceOpt == false)
+                    throw new InvalidOperationException(SR.GetString(CantShowModalOnNonInteractive));
+
+                hwndOwner = default;
+
+                if (serviceOpt == true)
+                {
                     if (owner != null)
                         throw new InvalidOperationException(SR.GetString(CantShowMBServiceWithOwner));
 
                     if (onHelp != null)
                         throw new InvalidOperationException(SR.GetString(CantShowMBServiceWithHelp));
                 }
+                else
+                {
+                    if (owner != null)
+                        hwndOwner = owner.Handle;
+                    else
+                    {
+                        hwndOwner = GetActiveWindow();
+                        if (hwndOwner == IntPtr.Zero)
+                            style |= MB_TASKMODAL;
+                    }
+                }
 
                 cbSize = Marshal.SizeOf<MSGBOXPARAMS>();
-                hwndOwner = default;
                 lpszIcon = IntPtr.Zero;
                 lpfnMsgBoxCallback = null;
                 dwContextHelpId = IntPtr.Zero;
@@ -68,8 +83,6 @@ namespace System.Windows.Forms
                     lpszIcon = icon.IconId;
                     style |= MB_USERICON;   
                 }
-
-                hwndOwner = owner?.Handle ?? GetActiveWindow();
 
                 if (onHelp != null)
                 {
