@@ -15,11 +15,14 @@ namespace MsgBox.Controllers
             control.Text = data.Text;
             control.Tag = data.Tag;
             control.AutoSize = true;
+            control.CheckedChanged += DoCheckedChanged;
         }
 
-        public object GetSelected() => Controls.First(s => s.Checked).Tag;
+        public object GetSelectedByTag() => GetSelected().Tag;
 
-        public void SetSelected(object tag)
+        public RadioButton GetSelected() => Controls.First(s => s.Checked);
+
+        public void SetSelectedByTag(object tag)
         {
             var control = Controls.FirstOrDefault(c => Equals(c.Tag, tag)); 
             if (control != null)
@@ -28,8 +31,8 @@ namespace MsgBox.Controllers
 
         protected override IEqualityComparer<dynamic> GetEqualityComparer() => EqualityComparerByTag.Default;
 
-        private void DoCheckedChanged(object button, EventArgs _) => OnCheckedChanged?.Invoke((RadioButton)button);
+        private void DoCheckedChanged(object button, EventArgs _) => CheckedChanged?.Invoke((RadioButton)button);
 
-        event Action<RadioButton> OnCheckedChanged;
+        public event Action<RadioButton> CheckedChanged;
     }
 }

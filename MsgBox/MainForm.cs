@@ -20,37 +20,39 @@ namespace MsgBox
             InitializeComponent();
             Icon = MessageBoxEx.IconResource.Application.ToIcon();
 
+            msgBoxDef = new TagRadioGroup(flowLayoutPanel2);
+            msgBoxDef.ForEach(GetDataFromEnum<MessageBoxDefaultButtonEx>());
+            msgBoxDef.SetSelectedByTag((MessageBoxDefaultButtonEx)default);
+
             msgBoxBtns = new TagRadioGroup(flowLayoutPanel1);
             msgBoxBtns.ForEach(GetDataFromEnum<MessageBoxButtonsEx>());
-            msgBoxBtns.SetSelected((MessageBoxButtonsEx)default);
-
-            msgBoxDef = new TagRadioGroup(flowLayoutPanel2);
-            msgBoxDef.ForEach(GetDataFromEnum<MessageBoxDefaultButton>());
-            msgBoxDef.SetSelected((MessageBoxDefaultButton)default);
+            msgBoxBtns.CheckedChanged += MsgBoxBtns_CheckedChanged;
+            msgBoxBtns.SetSelectedByTag((MessageBoxButtonsEx)default);
 
             msgBoxIcon = new TagRadioGroup(flowLayoutPanel3);
             msgBoxIcon.ForEach(GetDataFromEnum<MessageBoxIcon>());
-            msgBoxIcon.SetSelected((MessageBoxIcon)default);
+            msgBoxIcon.SetSelectedByTag((MessageBoxIcon)default);
 
             msgBoxUserIcon = new TagRadioGroup(flowLayoutPanel4);
-            msgBoxUserIcon.ForEach(new object[]
-            {
-                new { Text = nameof(AppRes.IDI_ICON1), Tag = AppRes.IDI_ICON1 },
-                new { Text = nameof(AppRes.IDI_ICON2), Tag = AppRes.IDI_ICON2 }
-            });
-            msgBoxUserIcon.SetSelected(AppRes.IDI_ICON1);
+            msgBoxUserIcon.ForEach(GetDataFromEnum<AppRes>());
+            msgBoxUserIcon.SetSelectedByTag(AppRes.idiIcon1);
 
             msgBoxOpt = new TagCheckGroup(flowLayoutPanel5);
             msgBoxOpt.ForEach(GetDataFromEnum<MessageBoxOptions>());
+
+            cbUseOwner.CheckedChanged += ConfigureOpts;
+            cbUseHelp.CheckedChanged += ConfigureOpts;
+            cbUseHelp.CheckedChanged += UseHelp_CheckedChanged;
+
 
             tabAppRes.Tag = new Action(() =>
             {
                 MessageBoxEx.Show(cbUseOwner.Checked ? this : null,
                     Resources.MsgBoxText,
                     Text,
-                    (MessageBoxButtonsEx)msgBoxBtns.GetSelected(),
-                    AppRes.LoadIcon((ushort)msgBoxUserIcon.GetSelected()),
-                    (MessageBoxDefaultButton)msgBoxDef.GetSelected(),
+                    (MessageBoxButtonsEx)msgBoxBtns.GetSelectedByTag(),
+                    ((AppRes)msgBoxUserIcon.GetSelectedByTag()).Load(),
+                    (MessageBoxDefaultButtonEx)msgBoxDef.GetSelectedByTag(),
                     CalcFromSelection<MessageBoxOptions>(msgBoxOpt.GetSelected()),
                     cbUseHelp.Checked ? HelpAction : (Action)default);
             });
@@ -60,12 +62,55 @@ namespace MsgBox
                 MessageBoxEx.Show(cbUseOwner.Checked ? this : null,
                     Resources.MsgBoxText,
                     Text,
-                    (MessageBoxButtonsEx)msgBoxBtns.GetSelected(),
-                    (MessageBoxIcon)msgBoxIcon.GetSelected(),
-                    (MessageBoxDefaultButton)msgBoxDef.GetSelected(),
+                    (MessageBoxButtonsEx)msgBoxBtns.GetSelectedByTag(),
+                    (MessageBoxIcon)msgBoxIcon.GetSelectedByTag(),
+                    (MessageBoxDefaultButtonEx)msgBoxDef.GetSelectedByTag(),
                     CalcFromSelection<MessageBoxOptions>(msgBoxOpt.GetSelected()),
                     cbUseHelp.Checked ? HelpAction : (Action)default);
             });
+        }
+
+        private void MsgBoxDefEnableButtons(int count)
+        {
+            count = Math.Min(count, msgBoxDef.Controls.Count);
+            int index = 0;
+            while (index < count)
+                msgBoxDef.Controls[index++].Enabled = true;
+            while (index < msgBoxDef.Controls.Count)
+                msgBoxDef.Controls[index++].Enabled = false;
+        }
+
+        private void MsgBoxBtns_CheckedChanged(RadioButton obj)
+        {
+            msgBoxDef.SetSelectedByTag((MessageBoxDefaultButtonEx)default);
+
+            int count;
+            switch ((MessageBoxButtonsEx)obj.Tag)
+            {
+                case MessageBoxButtonsEx.OK:
+                    count = 1;
+                    break;
+
+                case MessageBoxButtonsEx.OKCancel:
+                case MessageBoxButtonsEx.YesNo:
+                case MessageBoxButtonsEx.RetryCancel:
+                    count = 2;
+                    break;
+
+                case MessageBoxButtonsEx.AbortRetryIgnore:
+                case MessageBoxButtonsEx.YesNoCancel:
+                case MessageBoxButtonsEx.CancelRetryContinue:
+                    count = 3;
+                    break;
+
+                default:
+                    return;
+            }
+
+            if (cbUseHelp.Checked == true)
+                count++;
+
+            MsgBoxDefEnableButtons(count);
         }
 
         private void HelpAction()
@@ -73,7 +118,7 @@ namespace MsgBox
             MessageBoxEx.Show(Resources.HelpActionText,
                 Text,
                 MessageBoxButtonsEx.OK,
-                AppRes.LoadIcon(AppRes.IDI_SAMPLE));
+                AppRes.idiSample.Load());
         }
 
 #pragma warning disable IDE0051
@@ -109,5 +154,25 @@ namespace MsgBox
         }
 
         private void Show_Click(object sender, EventArgs e) => ((Action)tabContol.SelectedTab.Tag).Invoke();
+
+        private void UseHelp_CheckedChanged(object sender, EventArgs e) => MsgBoxBtns_CheckedChanged(msgBoxBtns.GetSelected());
+
+        private void ConfigureOpts(object sender, EventArgs e)
+        {
+            foreach (var button in msgBoxOpt.Controls)
+                button.Checked = false;
+
+            var buttons = msgBoxOpt.Controls.Join(new object[]
+                {
+                    MessageBoxOptions.DefaultDesktopOnly,
+                    MessageBoxOptions.ServiceNotification
+                },
+                button => button.Tag,
+                inKey => inKey,
+                (button, key) => button);
+
+            foreach (var button in buttons)
+                button.Enabled = cbUseHelp.Checked == false && cbUseOwner.Checked == false;
+        }
     }
 }

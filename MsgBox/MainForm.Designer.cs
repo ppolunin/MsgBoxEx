@@ -37,8 +37,8 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabContol = new System.Windows.Forms.TabControl();
             this.tabDefault = new System.Windows.Forms.TabPage();
-            this.tabAppRes = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tabAppRes = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -57,6 +57,24 @@
             this.groupBox3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            label1.BackColor = System.Drawing.SystemColors.ScrollBar;
+            label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            label1.Location = new System.Drawing.Point(3, 180);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(147, 1);
+            label1.TabIndex = 3;
+            // 
+            // label2
+            // 
+            label2.BackColor = System.Drawing.SystemColors.ScrollBar;
+            label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            label2.Location = new System.Drawing.Point(3, 180);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(147, 1);
+            label2.TabIndex = 3;
             // 
             // button1
             // 
@@ -105,15 +123,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(153, 210);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // label1
-            // 
-            label1.BackColor = System.Drawing.SystemColors.ScrollBar;
-            label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            label1.Location = new System.Drawing.Point(3, 180);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(147, 1);
-            label1.TabIndex = 3;
-            // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -144,6 +153,15 @@
             this.tabDefault.Text = "Default";
             this.tabDefault.UseVisualStyleBackColor = true;
             // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 6);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(86, 194);
+            this.flowLayoutPanel3.TabIndex = 8;
+            // 
             // tabAppRes
             // 
             this.tabAppRes.Controls.Add(this.flowLayoutPanel4);
@@ -154,15 +172,6 @@
             this.tabAppRes.TabIndex = 1;
             this.tabAppRes.Text = "AppRes";
             this.tabAppRes.UseVisualStyleBackColor = true;
-            // 
-            // flowLayoutPanel3
-            // 
-            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 6);
-            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(86, 194);
-            this.flowLayoutPanel3.TabIndex = 8;
             // 
             // flowLayoutPanel4
             // 
@@ -240,15 +249,6 @@
             this.cbUseOwner.TabIndex = 7;
             this.cbUseOwner.Text = "Use Owner";
             this.cbUseOwner.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            label2.BackColor = System.Drawing.SystemColors.ScrollBar;
-            label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            label2.Location = new System.Drawing.Point(3, 180);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(147, 1);
-            label2.TabIndex = 3;
             // 
             // MainForm
             // 
