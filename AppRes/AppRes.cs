@@ -1,10 +1,13 @@
 ﻿using System.Windows.Forms;
 
-public static class AppRes
+public enum AppRes : ushort
 {
-    public const ushort IDI_ICON1	= 2;
-    public const ushort IDI_ICON2	= 3;
-	public const ushort IDI_SAMPLE	= 177;
+    idiIcon1    = 2,
+    idiIcon2    = 3,
+    idiSample   = 177
+}
 
-    public static MessageBoxEx.IconResource LoadIcon(ushort iconId) => MessageBoxEx.IconResource.Load(typeof(AppRes).Assembly, iconId);
+public static class AppResLoader
+{
+    public static MessageBoxEx.IconResource Load(this AppRes res) => MessageBoxEx.IconResource.Load(typeof(AppRes).Assembly, (ushort)res);
 }
