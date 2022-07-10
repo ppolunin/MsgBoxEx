@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="DialogResultEx.cs" />
     <Compile Include="MessageBoxButtonsEx.cs" />
+    <Compile Include="MessageBoxDefaultButtonEx.cs" />
     <Compile Include="MessageBoxEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

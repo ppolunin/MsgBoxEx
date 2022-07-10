@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace System.Windows.Forms
 {
-
     public static class MessageBoxEx
     {
         #region Win API
@@ -193,7 +192,7 @@ namespace System.Windows.Forms
             string caption, 
             MessageBoxButtonsEx buttons, 
             MessageBoxIcon icon,
-            MessageBoxDefaultButton defaultButton, 
+            MessageBoxDefaultButtonEx defaultButton, 
             MessageBoxOptions options, 
             Action onHelp, 
             MSGBOXPARAMS.IIconResource userIcon, 
@@ -224,7 +223,7 @@ namespace System.Windows.Forms
             string caption, 
             MessageBoxButtonsEx buttons = MessageBoxButtonsEx.OK, 
             MessageBoxIcon icon = MessageBoxIcon.None,
-            MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1, 
+            MessageBoxDefaultButtonEx defaultButton = MessageBoxDefaultButtonEx.Button1, 
             MessageBoxOptions options = 0, 
             Action onHelp = null, 
             CultureInfo culture = null)
@@ -237,7 +236,7 @@ namespace System.Windows.Forms
             string caption, 
             MessageBoxButtonsEx buttons, 
             IconResource icon,
-            MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1, 
+            MessageBoxDefaultButtonEx defaultButton = MessageBoxDefaultButtonEx.Button1, 
             MessageBoxOptions options = 0, 
             Action onHelp = null, 
             CultureInfo culture = null)
