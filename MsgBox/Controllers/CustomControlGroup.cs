@@ -8,7 +8,7 @@ namespace MsgBox.Controllers
 {
     public abstract class CustomControlGroup<Ctrl> where Ctrl : Control, new()
     {
-        private struct Container : IReadOnlyList<Ctrl>
+        private readonly struct Container : IReadOnlyList<Ctrl>
         {
             private readonly FlowLayoutPanel containter;
 
