@@ -99,13 +99,16 @@ namespace System.Windows.Forms
         private static extern int InternalShow(in MSGBOXPARAMS msgboxParams);
 
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr LoadIcon(IntPtr hInstance, IntPtr lpIconName);
+        private static extern IntPtr LoadIcon(IntPtr hInstance, IntPtr iconId);
 
         [DllImport("User32.dll")]
         private static extern IntPtr GetActiveWindow();
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern IntPtr LoadImage(IntPtr hinst, IntPtr iconId, uint uType, int cxDesired, int cyDesired, uint fuLoad);
 
         #endregion
 
@@ -154,6 +157,8 @@ namespace System.Windows.Forms
             private readonly IntPtr iconId;
 
             private const int IDI_APPLICATION = 32512;
+            private const int LR_SHARED = 0x8000;
+            private const int IMAGE_ICON = 1;
 
             /// <summary>
             /// Returns the default resource known as IDI_APPLICATION of the main process. 
@@ -176,10 +181,24 @@ namespace System.Windows.Forms
             }
 
             /// <summary>
-            /// Converts a resource into an icon.
+            /// Converts a resource into an icon with size SM_CXICON & SM_CYICON.
             /// </summary>
             /// <returns>Returns <see cref="Icon"/> of the corresponding resource.</returns>
             public Icon ToIcon() => Icon.FromHandle(LoadIcon(hinstance, iconId));
+
+            /// <summary>
+            /// Converts a resource into an icon with size SM_CXSMICON & SM_CYSMICON.
+            /// </summary>
+            /// <returns>Returns <see cref="Icon"/> of the corresponding resource.</returns>
+            public Icon ToSmallIcon() 
+            {
+                Size size = SystemInformation.SmallIconSize;
+                IntPtr icon = LoadImage(hinstance, iconId, IMAGE_ICON, size.Width, size.Height, LR_SHARED);
+                if (icon == IntPtr.Zero)
+                    icon = LoadIcon(hinstance, iconId);
+
+                return Icon.FromHandle(icon);
+             }
 
             /// <summary>
             /// Loads unmanaged icon resources from a specific assembly for future use.
