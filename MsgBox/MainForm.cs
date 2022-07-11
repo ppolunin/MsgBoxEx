@@ -18,7 +18,7 @@ namespace MsgBox
         public MainForm()
         {
             InitializeComponent();
-            Icon = MessageBoxEx.IconResource.Application.ToIcon();
+            Icon = MessageBoxEx.IconResource.Application.ToSmallIcon();
 
             msgBoxDef = new TagRadioGroup(flowLayoutPanel2);
             msgBoxDef.ForEach(GetDataFromEnum<MessageBoxDefaultButtonEx>());
