@@ -181,13 +181,13 @@ namespace System.Windows.Forms
             }
 
             /// <summary>
-            /// Converts a resource into an icon with size SM_CXICON & SM_CYICON.
+            /// Converts a resource into an icon with size SM_CXICON and SM_CYICON.
             /// </summary>
             /// <returns>Returns <see cref="Icon"/> of the corresponding resource.</returns>
             public Icon ToIcon() => Icon.FromHandle(LoadIcon(hinstance, iconId));
 
             /// <summary>
-            /// Converts a resource into an icon with size SM_CXSMICON & SM_CYSMICON.
+            /// Converts a resource into an icon with size SM_CXSMICON and SM_CYSMICON.
             /// </summary>
             /// <returns>Returns <see cref="Icon"/> of the corresponding resource.</returns>
             public Icon ToSmallIcon() 
